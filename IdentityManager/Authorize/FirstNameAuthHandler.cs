@@ -21,6 +21,7 @@ namespace IdentityManager.Authorize
         }
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, FirstNameAuthRequirement requirement)
         {
+        // this line will throw an exception (line of 25) after logout if the user is in this page then press logout
             string userid = context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = _db.ApplicationUser.FirstOrDefault(u => u.Id == userid);
             var claims = Task.Run(async () => await _userManager.GetClaimsAsync(user)).Result;
